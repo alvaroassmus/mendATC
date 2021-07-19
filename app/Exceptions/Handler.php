@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +39,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * This method centralize the handling of the ATC application exceptions
+     *
+     * @param Exception $e
+     * @return JsonResponse
+     */
+    public static function processException(Exception $e): JsonResponse
+    {
+        return response()->json([
+            'ERR-MSG' => $e->getMessage()
+        ], $e->getCode());
     }
 }

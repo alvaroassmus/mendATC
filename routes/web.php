@@ -1,18 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AtcController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+/*REST layer*/
 
 Route::get('/', function () {
     return view('welcome', ['name' => 'TODO GUD']);
 });
+Route::post('boot', [AtcController::class, 'boot'])->name('boot');
+Route::post('enqueue', [AtcController::class, 'enqueue'])->name('enqueue');
+Route::post('dequeue', [AtcController::class, 'dequeue'])->name('dequeue');
+Route::get('list', [AtcController::class, 'list'])->name('list');
