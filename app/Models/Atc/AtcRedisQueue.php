@@ -306,7 +306,9 @@ class AtcRedisQueue implements AtcQueueInterface
     public function dequeueAircraftFromParticularQueue(string $queueName): array
     {
         try {
-            if ($queueName === 'emergencySmall') {
+            if ($queueName === 'emergencyLarge') {
+                // HAS NO VALIDATIONS FOR NOW
+            } elseif ($queueName === 'emergencySmall') {
                 $this->validateIfEmergencySmallQueueCanDequeue();
             } elseif ($queueName === 'vipLarge') {
                 $this->validateIfVipLargeQueueCanDequeue();

@@ -39,6 +39,11 @@ Removes an Aircraft from a specific queue.
     * **Code:** 403 <br />
       **Content:** `{ ERR-MSG : "You must initialize the system before using it. ERR_ATCQ_BAS" }`
 
+      OR
+
+    * **Code:** 406 <br />
+      **Content:** `{ ERR-MSG : "The selected QUEUE has no aircrafts to dequeue" }`
+
 * **queueName values:**
 
   - emergencyLarge

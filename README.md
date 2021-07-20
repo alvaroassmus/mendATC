@@ -60,11 +60,28 @@ Laravel has the error handler, so I created a method to catch and process the er
   2. Clone or download the project: https://github.com/alvaroassmus/mendATC.git
   3. Go to project folder and run `composer install`, be sure to have all the php dependencies required for laravel project or, it will fail. 
   4. Be sure to have the REDIS server up and running.
-  5. Run `php artisan serve` command from terminal and go to the shown URL. Your server will be up and running.
+  5. Run `php artisan serve` command from terminal and go to the <a href="http://127.0.0.1:8000" target="_blank">localhost</a> URL. 
 
-## Unit Testing
+## Unit and Feature Testing
 
-// TODO
+  After you deploy the project you can test the REST API with the following command:
+
+  `php artisan test`
+
+It should give you the following result:
+
+```
+PASS  Tests\Feature\MendAtcTest
+✓ welcome page is up
+✓ validate boot status function
+✓ boot rest api
+✓ enqueue rest api
+✓ enqueue mandatory size field
+✓ enqueue mandatory type field
+✓ dequeue mandatory queue name field
+✓ dequeue rest api
+✓ list rest api
+```
 
 ## About the developer
 
