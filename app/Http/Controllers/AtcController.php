@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atc\Aircraft;
+use App\Models\Atc\AtcRedisQueue;
 use Exception;
 use App\Exceptions\Handler;
-use App\Models\Atc\Aircraft;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -12,8 +13,17 @@ use Illuminate\Http\Request;
 
 class AtcController extends Controller implements AtcInterface
 {
+
+    protected $atcQueue;
+
+    public function __construct(AtcRedisQueue $atcQueue)
+    {
+        $this->atcQueue = $atcQueue;
+    }
+
     /**
-     * Display a listing of the resource.
+     * This function boots the system to start working, it checks
+     * if system is down it turns it on
      * @param Request $request
      * @return JsonResponse
      * @author alvaro.assmus@bairesdev.com
@@ -21,12 +31,10 @@ class AtcController extends Controller implements AtcInterface
     public function boot(Request $request): JsonResponse
     {
         try {
-            // HERE GOES THE CODE
-            // throw new Exception('TODO GUD', 503);
-            $air = new Aircraft(1, 'VIP', 'L');
+            $this->atcQueue->bootAtcSystem();
             return response()->json([
-                'data' => $air->toJson(),
-                'msg' => 'THIS IS AN OK MSG',
+                'data' => 'on',
+                'msg' => 'SYSTEM BOOTED CORRECTLY',
             ]);
         } catch (Exception $e) {
             return Handler::processException($e);
@@ -34,7 +42,7 @@ class AtcController extends Controller implements AtcInterface
     }
 
     /**
-     * Display a listing of the resource.
+     * This function adds an aircraft to the queue
      * @param Request $request
      * @return JsonResponse
      * @author alvaro.assmus@bairesdev.com
@@ -42,10 +50,11 @@ class AtcController extends Controller implements AtcInterface
     public function enqueue(Request $request): JsonResponse
     {
         try {
-            // HERE GOES THE CODE
+            $this->atcQueue->validateBootStatusIsOn();
+            $aircraft = new Aircraft(0, $request['aircraft']['type'], $request['aircraft']['size']);
             return response()->json([
-                'name' => 'TODO',
-                'state' => 'GUD enqueue',
+                'data' => $this->atcQueue->enqueueAircraft($aircraft)->toJson(),
+                'msg' => 'Aircraft added',
             ]);
         } catch (Exception $e) {
             return Handler::processException($e);
@@ -53,7 +62,7 @@ class AtcController extends Controller implements AtcInterface
     }
 
     /**
-     * Display a listing of the resource.
+     * This function removes an aircraft from the queue
      * @param Request $request
      * @return JsonResponse
      * @author alvaro.assmus@bairesdev.com
@@ -61,10 +70,10 @@ class AtcController extends Controller implements AtcInterface
     public function dequeue(Request $request): JsonResponse
     {
         try {
-            // HERE GOES THE CODE
+            $this->atcQueue->validateBootStatusIsOn();;
             return response()->json([
-                'name' => 'TODO',
-                'state' => 'GUD dequeue',
+                'data' => $this->atcQueue->dequeueAircraft($request['queueName']),
+                'msg' => 'Aircraft removed',
             ]);
         } catch (Exception $e) {
             return Handler::processException($e);
@@ -72,19 +81,20 @@ class AtcController extends Controller implements AtcInterface
     }
 
     /**
-     * Display a listing of the resource.
+     * Returns the list of aircrafts in the queue
      * @return JsonResponse
      * @author alvaro.assmus@bairesdev.com
      */
     public function list(): JsonResponse
     {
         try {
-            // HERE GOES THE CODE
+            $this->atcQueue->validateBootStatusIsOn();
             return response()->json([
-                'name' => 'TODO',
-                'state' => 'GUD list',
+                'data' => $this->atcQueue->listAircrafts(),
+                'msg' => 'The list of queues',
             ]);
         } catch (Exception $e) {
+            \Log::info($e->getTraceAsString());
             return Handler::processException($e);
         }
     }

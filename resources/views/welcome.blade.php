@@ -16,11 +16,24 @@
                 </div><br/>
             @endif
             <div class="flex justify-center">
-                Hello, {{ $name }}.
-                <form action="javascript:void(0)" id="frm-create-post" method="post">
+                <form action="javascript:void(0)" id="frm-boot" method="post">
                     @csrf
-                    <button type="submit" class="btn btn-primary-outline" id="submit-post">CLICK HERE TO START THE
-                        SYSTEM
+                    <button type="submit" class="btn btn-primary-outline" id="submit-boot">BOOT
+                    </button>
+                </form>
+                <form action="javascript:void(0)" id="frm-enqueue" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-primary-outline" id="submit-enqueue">ENQUEUE
+                    </button>
+                </form>
+                <form action="javascript:void(0)" id="frm-dequeue" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-primary-outline" id="submit-dequeue">DEQUEUE
+                    </button>
+                </form>
+                <form action="javascript:void(0)" id="frm-list" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-primary-outline" id="submit-list">LIST
                     </button>
                 </form>
             </div>
@@ -34,16 +47,76 @@
             }
         });
 
-        $("#frm-create-post").validate({
+        $("#frm-boot").validate({
             submitHandler: function () {
                 $.ajax({
                     url: "{{ route('boot') }}",
                     type: 'POST',
                     dataType: "json",
                     data: {
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (data) {
+                        console.log(1, data);
+                    },
+                    error: function (error) {
+                        console.error(2, error);
+                    }
+                });
+            }
+        });
+
+        $("#frm-enqueue").validate({
+            submitHandler: function () {
+                $.ajax({
+                    url: "{{ route('enqueue') }}",
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
                         _token: "{{ csrf_token() }}",
-                        name: 'TODO',
-                        description: 'GUD'
+                        aircraft: {
+                            type: 'C',
+                            size: 'L'
+                        }
+                    },
+                    success: function (data) {
+                        console.log(1, data);
+                    },
+                    error: function (error) {
+                        console.error(2, error);
+                    }
+                });
+            }
+        });
+
+        $("#frm-dequeue").validate({
+            submitHandler: function () {
+                $.ajax({
+                    url: "{{ route('dequeue') }}",
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        queueName: 'cargoSmall'
+                    },
+                    success: function (data) {
+                        console.log(1, data);
+                    },
+                    error: function (error) {
+                        console.error(2, error);
+                    }
+                });
+            }
+        });
+
+        $("#frm-list").validate({
+            submitHandler: function () {
+                $.ajax({
+                    url: "{{ route('list') }}",
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
+                        _token: "{{ csrf_token() }}"
                     },
                     success: function (data) {
                         console.log(1, data);
