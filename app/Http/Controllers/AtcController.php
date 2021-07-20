@@ -72,7 +72,7 @@ class AtcController extends Controller implements AtcInterface
         try {
             $this->atcQueue->validateBootStatusIsOn();;
             return response()->json([
-                'data' => $this->atcQueue->dequeueAircraft($request['queueName']),
+                'data' => $this->atcQueue->dequeueAircraftFromParticularQueue($request['queueName']),
                 'msg' => 'Aircraft removed',
             ]);
         } catch (Exception $e) {
@@ -94,7 +94,6 @@ class AtcController extends Controller implements AtcInterface
                 'msg' => 'The list of queues',
             ]);
         } catch (Exception $e) {
-            \Log::info($e->getTraceAsString());
             return Handler::processException($e);
         }
     }
