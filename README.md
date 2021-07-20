@@ -2,7 +2,6 @@
 <img alt="logo" src="https://raw.githubusercontent.com/alvaroassmus/mendATC/master/docs/assets/radar-svgrepo-com.svg" width="200">
 </p>
 <h1 style="text-align: center;">mendATC Air Traffic Control</h1>
-<hr/>
 
 ## About The mendATC Project
 
@@ -17,9 +16,7 @@ Welcome to mendATC.
 **Eng Alvaro Assmus Nassar**<br/>
 **alvaro.assmus@bairesdev.com**
 
-<hr/>
-
-##LAYERS
+## LAYERS
 
 * **REST**
   
@@ -48,11 +45,24 @@ Welcome to mendATC.
 
 Laravel has the error handler, so I created a method to catch and process the errors of the project, this way the developer can use the TRY-CATCH sentence to control the errors that have to exist in the project. You can check the <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Http/Controllers/AtcController.php" target="_blank">AtcController.php</a> and, you will find that the methods have the TRY-CATCH block calling the Laravel <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Exceptions/Handler.php" target="_blank">Handler.php</a> with the processException method.
 
-## Deploying
+## Software requirements
 
-// TODO
+- PHP (7.4.3)
+- COMPOSER (1.10.1)
+- NPM (7.20.0)
+- REDIS (5.0.7)
 
-## Testing
+## Deploying in localhost
+
+  To deploy the project you must follow the next steps:
+    
+  1. Have the software requirements installed :P  
+  2. Clone or download the project: https://github.com/alvaroassmus/mendATC.git
+  3. Go to project folder and run `composer install`, be sure to have all the php dependencies required for laravel project or, it will fail. 
+  4. Be sure to have the REDIS server up and running.
+  5. Run `php artisan serve` command from terminal and go to the shown URL. Your server will be up and running.
+
+## Unit Testing
 
 // TODO
 
