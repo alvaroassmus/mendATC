@@ -56,7 +56,7 @@ Laravel has the error handler, so I created a method to catch and process the er
 
   To deploy the project you must follow the next steps:
     
-  1. Have the software requirements installed :P  
+  1. Have the software requirements installed :P and, the computer must have access to the internet.
   2. Clone or download the project: https://github.com/alvaroassmus/mendATC.git
   3. Go to project folder and run `composer install`, be sure to have all the php dependencies required for laravel project or, it will fail. 
   4. Be sure to have the REDIS server up and running.

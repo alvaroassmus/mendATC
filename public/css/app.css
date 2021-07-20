@@ -9,4 +9,8 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
+.card-title {
+    background: #0f7f6a;
+    color: #fff;
+}
 
