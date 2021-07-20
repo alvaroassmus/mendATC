@@ -20,12 +20,14 @@ Removes an Aircraft from a specific queue.
 
   **Required:**
 
+  `_token: X-CSRF-TOKEN`
+  
   `['queueName'] : string`
 
 * **Success Response:**
 
     * **Code:** 200 <br />
-      **Content:** `{ data : [id => int, type => string, size => string], msg : "Aircraft removed" }`
+      **Content:** `{ data : Object { aircraft }, msg : "Aircraft removed" }`
 
 * **Error Response:**
 

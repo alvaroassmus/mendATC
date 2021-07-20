@@ -20,13 +20,16 @@ Adds an Aircraft to the queue.
 
   **Required:**
 
-  `['type'] : string`<br />
+  `_token: X-CSRF-TOKEN`
+
+  `['type'] : string`
+  
   `['size'] : string`
 
 * **Success Response:**
 
     * **Code:** 200 <br />
-      **Content:** `{ data : [id => int, type => string, size => string], msg : "Aircraft added" }`
+      **Content:** `{ data : Object { aircraft }, msg : "Aircraft added" }`
 
 * **Error Response:**
 

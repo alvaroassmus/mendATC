@@ -1,12 +1,12 @@
 [Go Back](https://github.com/alvaroassmus/mendATC#readme)
 
-**Boot**
+**List**
 ----
-Starts the ATC system.
+Loads all the queues of the ATC system.
 
 * **URL**
 
-  /boot
+  /list
 
 * **Method:**
 
@@ -25,17 +25,18 @@ Starts the ATC system.
 * **Success Response:**
 
     * **Code:** 200 <br />
-      **Content:** `{ data : on, msg : "SYSTEM BOOTED CORRECTLY" }`
+      **Content:** `{ data : Object { queues }, msg : "The list of queues" }`
 
 * **Error Response:**
 
-    None
+    * **Code:** 403 <br />
+      **Content:** `{ ERR-MSG : "You must initialize the system before using it. ERR_ATCQ_BAS" }`
 
 * **Sample Call:**
 
   ```javascript
     $.ajax({
-        url: "/boot",
+        url: "/list",
         type: 'POST',
         dataType: "json",
         data: {
