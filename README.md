@@ -1,65 +1,61 @@
-<p align="center">
-<a href="https://laravel.com" target="_blank">
-<img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400">
-</a></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<p style="text-align: center;">
+<img alt="logo" src="https://raw.githubusercontent.com/alvaroassmus/mendATC/master/docs/assets/radar-svgrepo-com.svg" width="200">
 </p>
+<h1 style="text-align: center;">mendATC Air Traffic Control</h1>
+<hr/>
 
 ## About The mendATC Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Using LARAVEL framework with REDIS, I develop an Air Traffic Control system (ATCS) that meets the requirements listed in the requirements document (<a href="https://raw.githubusercontent.com/alvaroassmus/mendATC/master/docs/assets/requirements.pdf" target="_blank">download</a>). The ATCS will allow the queuing and dequeuing of aircraft (AC).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+In this README file you will find an overview of how I distributed the diferent layers and the functionalities requested for the test.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+You will also find the deployment instructions and artifacts list and description.
 
-## Learning Laravel
+Welcome to mendATC.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Eng Alvaro Assmus Nassar**<br/>
+**alvaro.assmus@bairesdev.com**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<hr/>
 
-## Laravel Sponsors
+##LAYERS
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* **REST**
+  
+  This layer contains the REST API for the project, they are located in the <a href="https://github.com/alvaroassmus/mendATC/blob/master/routes/web.php" target="_blank">web.php</a> file. You can read each method documentation in the following list:
+  - [Boot](https://github.com/alvaroassmus/mendATC/blob/master/docs/rest/boot.md)
+  - [Enqueue](https://github.com/alvaroassmus/mendATC/blob/master/docs/rest/enqueue.md)
+  - [Dequeue](https://github.com/alvaroassmus/mendATC/blob/master/docs/rest/dequeue.md)
+  - [List](https://github.com/alvaroassmus/mendATC/blob/master/docs/rest/list.md)
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+* **LOGIC**
+  
+  The logic layer located in the <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Http/Controllers/AtcController.php" target="_blank">AtcController.php</a>. This class implements the <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Http/Controllers/AtcInterface.php" target="_blank">AtcInterface.php</a>,
+  the interface is to guarantee the correct coding of the methods for the ATC logic layer.
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* **DATA**
+  
+  The data layer located in the <a href="https://github.com/alvaroassmus/mendATC/tree/master/app/Models/Atc" target="_blank">Model folder</a> contains: 
+  - <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Models/Atc/Aircraft.php" target="_blank">Aircraft DTO</a>: Used to transport an aircraft from layer to layer.
+  - <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Models/Atc/AtcQueueInterface.php" target="_blank">AtcQueueInterface</a>: Created to define the methods for new implementations if the storage changes, for this example I used REDIS, but if it has to change to MYSQL or JSON files, the developer must implement these methods to maintain the project scope.
+  - <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Models/Atc/AtcRedisQueue.php" target="_blank">AtcRedisQueue</a>: It centralizes the REDIS queues implementation for the project.
+  - REDIS: Used to store the queues, and the boot flag.
 
-## Code of Conduct
+## Error handling
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Laravel has the error handler, so I created a method to catch and process the errors of the project, this way the developer can use the TRY-CATCH sentence to control the errors that have to exist in the project. You can check the <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Http/Controllers/AtcController.php" target="_blank">AtcController.php</a> and, you will find that the methods have the TRY-CATCH block calling the Laravel <a href="https://github.com/alvaroassmus/mendATC/blob/master/app/Exceptions/Handler.php" target="_blank">Handler.php</a> with the processException method.
 
-## Security Vulnerabilities
+## Deploying
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+// TODO
 
-## License
+## Testing
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+// TODO
+
+## About the developer
+
+Alvaro Assmus Nassar (me) - fullstack software engineer with more than 14 years of experience developing software, also a dad and a musician. I love life and learning. 
