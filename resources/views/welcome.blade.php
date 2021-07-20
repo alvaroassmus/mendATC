@@ -17,22 +17,18 @@
             @endif
             <div class="flex justify-center">
                 <form action="javascript:void(0)" id="frm-boot" method="post">
-                    @csrf
                     <button type="submit" class="btn btn-primary-outline" id="submit-boot">BOOT
                     </button>
                 </form>
                 <form action="javascript:void(0)" id="frm-enqueue" method="post">
-                    @csrf
                     <button type="submit" class="btn btn-primary-outline" id="submit-enqueue">ENQUEUE
                     </button>
                 </form>
                 <form action="javascript:void(0)" id="frm-dequeue" method="post">
-                    @csrf
                     <button type="submit" class="btn btn-primary-outline" id="submit-dequeue">DEQUEUE
                     </button>
                 </form>
                 <form action="javascript:void(0)" id="frm-list" method="post">
-                    @csrf
                     <button type="submit" class="btn btn-primary-outline" id="submit-list">LIST
                     </button>
                 </form>
@@ -74,10 +70,8 @@
                     dataType: "json",
                     data: {
                         _token: "{{ csrf_token() }}",
-                        aircraft: {
-                            type: 'C',
-                            size: 'L'
-                        }
+                        type: 'C',
+                        size: 'L'
                     },
                     success: function (data) {
                         console.log(1, data);

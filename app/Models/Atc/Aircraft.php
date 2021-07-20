@@ -11,7 +11,7 @@ class Aircraft
     /** @var string */
     private $size;
 
-    function __construct($id, $type, $size)
+    function __construct($type, $size, $id = 0)
     {
         $this->id = $id;
         $this->type = $type;

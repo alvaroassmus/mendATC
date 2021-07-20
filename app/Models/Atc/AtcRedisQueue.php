@@ -48,7 +48,7 @@ class AtcRedisQueue implements AtcQueueInterface
             $keys = Redis::keys($queueName . ':*');
             foreach ($keys as $key) {
                 $redisAircraft = Redis::hgetall(str_replace("mendatc_database_", "", $key));
-                $aircraft = new Aircraft(intval($redisAircraft['id'], 10), $redisAircraft['type'], $redisAircraft['size']);
+                $aircraft = new Aircraft($redisAircraft['type'], $redisAircraft['size'], intval($redisAircraft['id'], 10));
                 $queueResult[] = $aircraft->toJson();
             }
             usort($queueResult, function ($a, $b) {

@@ -51,7 +51,13 @@ class AtcController extends Controller implements AtcInterface
     {
         try {
             $this->atcQueue->validateBootStatusIsOn();
-            $aircraft = new Aircraft(0, $request['aircraft']['type'], $request['aircraft']['size']);
+            if(!isset($request['type']) || $request['type'] === '') {
+                throw new Exception("The type is required", 400);
+            }
+            if(!isset($request['size']) || $request['size'] === '') {
+                throw new Exception("The size is required", 400);
+            }
+            $aircraft = new Aircraft($request['type'], $request['size']);
             return response()->json([
                 'data' => $this->atcQueue->enqueueAircraft($aircraft)->toJson(),
                 'msg' => 'Aircraft added',
@@ -70,7 +76,10 @@ class AtcController extends Controller implements AtcInterface
     public function dequeue(Request $request): JsonResponse
     {
         try {
-            $this->atcQueue->validateBootStatusIsOn();;
+            $this->atcQueue->validateBootStatusIsOn();
+            if(!isset($request['queueName']) || $request['queueName'] === '') {
+                throw new Exception("The queueName is required", 400);
+            }
             return response()->json([
                 'data' => $this->atcQueue->dequeueAircraftFromParticularQueue($request['queueName']),
                 'msg' => 'Aircraft removed',
