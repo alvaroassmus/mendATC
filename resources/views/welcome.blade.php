@@ -89,14 +89,17 @@
                         <h5 class="card-title">List</h5>
                         <p class="card-text">Loads all the queues of the ATC system.</p>
                         <form action="javascript:void(0)" id="frm-list" method="post">
-                            <button type="submit" class="btn btn-primary-outline" id="submit-list">LIST
-                            </button>
+                            <div class="col-12 button-container">
+                                <button type="submit" class="btn btn-primary" id="submit-list">LIST
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <h2>Open the browser console to check REST answers</h2>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({

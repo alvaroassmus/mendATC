@@ -61,6 +61,7 @@ Laravel has the error handler, so I created a method to catch and process the er
   3. Go to project folder and run `composer install`, be sure to have all the php dependencies required for laravel project or, it will fail. 
   4. Be sure to have the REDIS server up and running.
   5. Run `php artisan serve` command from terminal and go to the <a href="http://127.0.0.1:8000" target="_blank">localhost</a> URL. 
+  6. Use each of the options in the UI and check REST answers in the browser console.
 
 ## Unit and Feature Testing
 
